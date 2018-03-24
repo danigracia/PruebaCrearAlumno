@@ -9,6 +9,62 @@ namespace EjercicioAlumno
 {
     public class Functions
     {
+        public enum Options
+        {
+            NuevoAlumno = 1,
+            CambiarFormato = 2,
+            Salir = 3
+            
+        }
+
+        public static void MenuPrincipal()
+        {
+
+            Options caseSwitch = Options.NuevoAlumno;
+
+            while (true)
+            {               
+
+                caseSwitch = Switch(caseSwitch);
+
+                if (caseSwitch == Options.Salir)
+                {
+                    break;
+                }
+
+            }
+        }
+        public static Options Switch(Options caseSwitch)
+        {
+
+            string format = GetFormat();
+            int option = GetOption(format);
+            string path = GetPath(format);
+
+            
+
+            caseSwitch = TextMain();
+
+            switch (caseSwitch)
+            {
+                case Options.NuevoAlumno:
+                    NewAlumno(option, path);
+                    return Options.NuevoAlumno;
+
+                case Options.CambiarFormato:
+                    SelectFileSave();
+                    return Options.CambiarFormato;
+
+                case Options.Salir:
+                    caseSwitch = Exit();
+                    return Options.Salir;
+
+                
+
+            }
+            return Options.Salir;
+        }
+
         public static int GetOption(string format)
         {
             int option = 0;
@@ -29,17 +85,32 @@ namespace EjercicioAlumno
             return format;
         }
 
-        public static int TextMain()
+        public static Options TextMain()
         {
             Console.WriteLine("Menu:");
             Console.WriteLine("-----------------");
             Console.WriteLine("1-Crear nuevo alumno:");
             Console.WriteLine("2-Elegir en que formato serializar:");
             Console.WriteLine("3-Salir:");
-            Console.WriteLine("Selecciona una opcion: ");
-            int option = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Selecciona una opcion: ");
+            int sel = Convert.ToInt32(Console.ReadLine());
+
             Console.Clear();
-            return option;
+            if (sel == 1)
+            {
+                return Options.NuevoAlumno;
+            }
+            else if (sel == 2)
+            {
+                return Options.CambiarFormato;
+            }
+            else if (sel == 3)
+            {
+                return Options.Salir;
+            }
+            else return Options.Salir;
+
+            
         }
 
         public static void NewAlumno(int option, string path)
@@ -51,13 +122,13 @@ namespace EjercicioAlumno
             string json;
             Console.WriteLine("Has selecionado la opcion crear nuevo alumno:");
             Console.WriteLine("-----------------");
-            Console.WriteLine("Introduce el ID:");
+            Console.Write("Introduce el ID: ");
             id = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Introduce el nombre:");
+            Console.Write("Introduce el nombre: ");
             nombre = Console.ReadLine();
-            Console.WriteLine("Introduce el apellido:");
+            Console.Write("Introduce el apellido: ");
             apellido = Console.ReadLine();
-            Console.WriteLine("Introduce el DNI:");
+            Console.Write("Introduce el DNI: ");
             dni = Console.ReadLine();
 
             if (option == 1)
@@ -105,7 +176,7 @@ namespace EjercicioAlumno
             Console.WriteLine("-----------------");
             Console.WriteLine("1- Txt:");
             Console.WriteLine("2- Json:");
-            Console.WriteLine("Selecciona una opcion:");
+            Console.Write("Selecciona una opcion: ");
             int option = Convert.ToInt32(Console.ReadLine());
             System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (option == 1)
@@ -126,19 +197,13 @@ namespace EjercicioAlumno
             return @"alumnos." + format;
         }
 
-        public static void Exit()
+        public static Options Exit()
         {
             Console.WriteLine("Hasta pronto...");
             Thread.Sleep(1500);
+            return Options.Salir;
         }
-        public static bool CheckExit(int caseSwitch)
-        {
-            if (caseSwitch == 3)
-            {
-                return true;
-            }
-            return false;
-        }
+       
     }
 }
 
