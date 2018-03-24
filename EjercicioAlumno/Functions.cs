@@ -24,7 +24,6 @@ namespace EjercicioAlumno
 
             while (true)
             {               
-
                 caseSwitch = Switch(caseSwitch);
 
                 if (caseSwitch == Options.Salir)
@@ -36,12 +35,9 @@ namespace EjercicioAlumno
         }
         public static Options Switch(Options caseSwitch)
         {
-
             string format = GetFormat();
             int option = GetOption(format);
-            string path = GetPath(format);
-
-            
+            string path = GetPath(format);            
 
             caseSwitch = TextMain();
 
@@ -150,8 +146,20 @@ namespace EjercicioAlumno
             }
             else if (option == 2)
             {
+                if (!File.Exists(path))
+                {
+                    var file = File.Create(path);
+                    file.Close();
+                }
                 var initialJson = File.ReadAllText(path);
+                
                 var list = JsonConvert.DeserializeObject<List<CrearAlumno>>(initialJson);
+                if(list == null)
+                {
+                    Console.Write("entro");
+                    Console.ReadKey();
+                    list = new List<CrearAlumno>();
+                }
                 list.Add(new CrearAlumno()
                 {
                     Id = id,
@@ -189,6 +197,7 @@ namespace EjercicioAlumno
             }
             
             config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
             Console.Clear();
         }
 
