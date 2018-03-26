@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrearAlumno.cs" />
-    <Compile Include="Functions.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="FileFactory.cs" />
+    <Compile Include="Mains.cs" />
+    <Compile Include="IFileFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

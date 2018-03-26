@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft;
 using System.Collections.Generic;
 
-namespace EjercicioAlumno
+namespace EjercicioAlumno.Tests
 {
     public class CrearAlumno
     {

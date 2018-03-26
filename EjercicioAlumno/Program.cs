@@ -3,11 +3,12 @@ using System.IO;
 
 namespace EjercicioAlumno
 {
-    class Program : Functions
+    public class Program
     {
         static void Main(string[] args)
         {
-            MenuPrincipal();
+            Mains menu = new Mains();
+            menu.MenuPrincipal();
             
         }
     }
