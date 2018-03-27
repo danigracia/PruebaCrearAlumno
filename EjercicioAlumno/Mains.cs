@@ -109,9 +109,10 @@ namespace EjercicioAlumno
 
         public CrearAlumno TextMainSecAlum(int option, string path)
         {
+            var guid = Guid.NewGuid().ToString();
             Console.WriteLine("Has selecionado la opcion crear nuevo alumno:");
             Console.WriteLine("-----------------");
-            Console.Write("Introduce el ID: ");
+            Console.Write("ID: ");
             var id = Convert.ToInt32(Console.ReadLine());
             Console.Write("Introduce el nombre: ");
             var nombre = Console.ReadLine();
@@ -121,7 +122,7 @@ namespace EjercicioAlumno
             var dni = Console.ReadLine();
 
             Console.Clear();
-            return new CrearAlumno(id, nombre, apellido, dni);
+            return new CrearAlumno(guid, id, nombre, apellido, dni);
 
         }
 

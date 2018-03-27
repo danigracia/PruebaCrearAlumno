@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace EjercicioAlumno
 {
-    public class FileFactory 
+    public class FileFactory : IFileFactory
     {
         public string GetPath(string format)
         {
-            return @"alumnos." + format;
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments)) + "alumnos." + format;
         }
 
         public string GetFormat()
@@ -25,7 +25,7 @@ namespace EjercicioAlumno
         public void InsertarAlumnoTxt(CrearAlumno alumno, String path)
         {
             StreamWriter sw = File.AppendText(path);
-            sw.WriteLine(alumno.Id + "," + alumno.Nombre + "," + alumno.Apellido + "," + alumno.Dni);
+            sw.WriteLine(alumno.Guid + "," + alumno.Id + "," + alumno.Nombre + "," + alumno.Apellido + "," + alumno.Dni);
             sw.Close();
         }
 

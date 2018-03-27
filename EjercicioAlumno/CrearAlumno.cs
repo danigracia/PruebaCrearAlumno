@@ -10,6 +10,7 @@ namespace EjercicioAlumno
     public class CrearAlumno
     {
         private int id;
+        private string guid;
         private string nombre;
         private string apellido;
         private string dni;
@@ -20,12 +21,19 @@ namespace EjercicioAlumno
 
         }
 
-        public CrearAlumno(int id, string nombre, string apellido, string dni)
+        public CrearAlumno(string guid, int id, string nombre, string apellido, string dni)
         {
+            this.guid = guid;
             this.id = id;
             this.nombre = nombre;
             this.apellido = apellido;
             this.dni = dni;
+        }
+
+        public string Guid
+        {
+            get { return guid; }
+            set { guid = value; }
         }
 
         public int Id
@@ -55,6 +63,7 @@ namespace EjercicioAlumno
         public override bool Equals(object obj)
         {
             return obj is CrearAlumno alumno &&
+                   guid == alumno.guid &&
                    id == alumno.id &&
                    nombre == alumno.nombre &&
                    apellido == alumno.apellido &&
@@ -64,6 +73,7 @@ namespace EjercicioAlumno
         public override int GetHashCode()
         {
             var hashCode = 1619805141;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(guid);
             hashCode = hashCode * -1521134295 + id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(nombre);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(apellido);

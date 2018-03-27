@@ -8,7 +8,7 @@ namespace EjercicioAlumno
 {
     public interface IFileFactory
     {
-        string InsertarAlumnoTxt(CrearAlumno alumno, String path);
-        string InsertarAlumnoJson(CrearAlumno alumno, String path);
+        void InsertarAlumnoTxt(CrearAlumno alumno, String path);
+        void InsertarAlumnoJson(CrearAlumno alumno, String path);
     }
 }

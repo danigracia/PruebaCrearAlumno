@@ -13,16 +13,18 @@ namespace EjercicioAlumno.Tests
     [TestClass()]
     public class EjercicioAlumnoIntegrationTests
     {
-        FileFactory iFileFactory = new FileFactory();
+        IFileFactory iFileFactory = new FileFactory();
+       
 
-        [DataRow(1, "dani", "gracia", "1234", @"alumnos.json")]
+        [DataRow(1, "dani", "gracia", "1234", @"testalumnos.json")]
+        [DataRow(2, "sdsd", "gracdasdia", "123455", @"testalumnos.json")]
         [DataTestMethod]
         public void InsertarAlumnoJson(int id, string nombre, string apellido, string dni, string path)
         {
-            CrearAlumno alumno = new CrearAlumno(id, nombre, apellido, dni);
-
+            string guid = Guid.NewGuid().ToString();
+            CrearAlumno alumno = new CrearAlumno(guid, id, nombre, apellido, dni);
             iFileFactory.InsertarAlumnoJson(alumno, path);
-            var allJson = iFileFactory.GetDataFileJson(path);
+            var allJson = File.ReadAllText(path);
             bool found = false;
             var list = JsonConvert.DeserializeObject<List<CrearAlumno>>(allJson);
             foreach (var al in list)
@@ -35,13 +37,16 @@ namespace EjercicioAlumno.Tests
             }
             Assert.IsTrue(found);
         }
-        [DataRow(1, "dani", "gracia", "1234", @"alumnos.txt")]
+
+        [DataRow(1, "dani", "gracia", "1234", @"testalumnos.txt")]
+        [DataRow(2, "sdsd", "gracdasdia", "123455", @"testalumnos.txt")]
         [DataTestMethod]
         public void InsertarAlumnoTxt(int id, string nombre, string apellido, string dni, string path)
         {
-            CrearAlumno alumno = new CrearAlumno(id, nombre, apellido, dni);
+            string guid = Guid.NewGuid().ToString();
+            CrearAlumno alumno = new CrearAlumno(guid, id, nombre, apellido, dni);
             iFileFactory.InsertarAlumnoTxt(alumno, path);
-            string al = id + "," + nombre + "," + apellido + "," + dni;
+            string al = guid + "," + id + "," + nombre + "," + apellido + "," + dni;
             int countLines = File.ReadAllLines(path).Length;
             var lastLine = File.ReadLines(path).Skip(countLines - 1).Take(1).First();
             Assert.IsTrue(al.Equals(lastLine));
